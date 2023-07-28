@@ -1,136 +1,181 @@
 namespace SpriteKind {
-    export const Changuito = SpriteKind.create()
-    export const Trap = SpriteKind.create()
     export const P_1 = SpriteKind.create()
     export const P_2 = SpriteKind.create()
-    export const bob = SpriteKind.create()
-}
-function Doble_Jump () {
-    pauseUntil(() => true)
-    if (story.checkLastAnswer("A")) {
-        pause(100)
-        if (controller.player1.isPressed(ControllerButton.B)) {
-            if (Player1.isHittingTile(CollisionDirection.Bottom)) {
-                Player1.vy = -140
-                jump = true
-                music.play(music.melodyPlayable(music.pewPew), music.PlaybackMode.UntilDone)
-            } else if (jump == true) {
-                Player1.vy = -150
-                jump = false
-            }
-        }
-    }
 }
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Player1.isHittingTile(CollisionDirection.Bottom)) {
-        Player1.x += -140
+        Player1.vy += -140
     }
     music.play(music.melodyPlayable(music.pewPew), music.PlaybackMode.UntilDone)
 })
-scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile12`, function (sprite, location) {
-    if (true) {
-        info.changeLifeBy(-3)
-        sprites.destroy(Player1, effects.halo, 500)
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (story.checkLastAnswer("A")) {
+        pause(100)
+        if (Player1.isHittingTile(CollisionDirection.Bottom)) {
+            Player1.vy = -140
+            jump = true
+            if (controller.right.isPressed() && controller.B.isPressed()) {
+                animation.runImageAnimation(
+                Player1,
+                [img`
+                    . . . . . . f f f f f f . . . . 
+                    . . . . f f e e e e f 2 f . . . 
+                    . . . f f e e e e f 2 2 2 f . . 
+                    . . . f e e e f f e e e e f . . 
+                    . . . f f f f e e 2 2 2 2 e f . 
+                    . . . f e 2 2 2 f f f f e 2 f . 
+                    . . f f f f f f f e e e f f f . 
+                    . . f f e 4 4 e b f 4 4 e e f . 
+                    . . f e e 4 d 4 1 f d d e f . . 
+                    . f f f e e e 4 d d d d f . . . 
+                    . f d d f f e e 4 4 4 e f . . . 
+                    . f d d d 4 d d e 2 2 2 f . . . 
+                    . f f f f e d d e 2 2 2 f . . . 
+                    . 5 4 2 5 f e e f 4 5 5 f . . . 
+                    . 5 2 4 5 . f f f f f f . . . . 
+                    . . 5 5 . . . f f f . . . . . . 
+                    `,img`
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . f f f f f f . . . . 
+                    . . . . f f e e e e f 2 f . . . 
+                    . . . f f e e e e f 2 2 2 f . . 
+                    . . . f e e e f f e e e e f . . 
+                    . . . f f f f e e 2 2 2 2 e f . 
+                    . . . f e 2 2 2 f f f f e 2 f . 
+                    . . f f f f f f f e e e f f f . 
+                    . . f f e 4 4 e b f 4 4 e e f . 
+                    . . f e e 4 d 4 1 f d d e f . . 
+                    . f f f e e e e e d d d f . . . 
+                    . f d f . f 4 d d e 4 e f . . . 
+                    . f d f . f e d d e 2 2 f . . . 
+                    . f f f f f f e e f 5 5 f f . . 
+                    . 5 4 5 f f f f f f f f f f . . 
+                    . . 5 . . f f . . . f f f . . . 
+                    `,img`
+                    . . . . . . f f f f f f . . . . 
+                    . . . . f f e e e e f 2 f . . . 
+                    . . . f f e e e e f 2 2 2 f . . 
+                    . . . f e e e f f e e e e f . . 
+                    . . . f f f f e e 2 2 2 2 e f . 
+                    . . . f e 2 2 2 f f f f e 2 f . 
+                    . . f f f f f f f e e e f f f . 
+                    . . f f e 4 4 e b f 4 4 e e f . 
+                    . . f e e 4 d 4 1 f d d e f . . 
+                    . f f f e e e 4 d d d d f . . . 
+                    . f d d f f e e 4 4 4 e f . . . 
+                    . f d d d 4 d d e 2 2 2 f . . . 
+                    . f f f f e d d e 2 2 2 f . . . 
+                    . 5 4 2 5 f e e f 4 5 5 f . . . 
+                    . 5 2 4 5 . f f f f f f . . . . 
+                    . . 5 5 . . . f f f . . . . . . 
+                    `,img`
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . f f f f f f . . . . 
+                    . . . . f f e e e e f 2 f . . . 
+                    . . . f f e e e e f 2 2 2 f . . 
+                    . . . f e e e f f e e e e f . . 
+                    . . . f f f f e e 2 2 2 2 e f . 
+                    . . . f e 2 2 2 f f f f e 2 f . 
+                    . . f f f f f f f e e e f f f . 
+                    . . f f e 4 4 e b f 4 4 e e f . 
+                    . . f e e 4 d 4 1 f d d e f . . 
+                    . f f f e e e 4 d d d d f . . . 
+                    . f d d 4 d d e 4 4 4 e f . . . 
+                    . f d d e d d e 2 2 2 2 f . . . 
+                    . f f f f e e f 4 4 5 5 f f . . 
+                    . 5 2 5 f f f f f f f f f f . . 
+                    . . 5 . . f f . . . f f f . . . 
+                    `],
+                500,
+                true
+                )
+            } else if (controller.left.isPressed() && controller.B.isPressed()) {
+                animation.runImageAnimation(
+                Player1,
+                [img`
+                    . . . . f f f f f f . . . . . . 
+                    . . . f 2 f e e e e f f . . . . 
+                    . . f 2 2 2 f e e e e f f . . . 
+                    . . f e e e e f f e e e f . . . 
+                    . f e 2 2 2 2 e e f f f f . . . 
+                    . f 2 e f f f f 2 2 2 e f . . . 
+                    . f f f e e e f f f f f f f . . 
+                    . f e e 4 4 f b e 4 4 e f f . . 
+                    . . f e d d f 1 4 d 4 e e f . . 
+                    . . . f d d d d 4 e e e f f f . 
+                    . . . f e 4 4 4 e e f f d d f . 
+                    . . . f 2 2 2 e d d 4 d d d f . 
+                    . . . f 2 2 2 e d d e f f f f . 
+                    . . . f 5 5 4 f e e f 5 2 4 5 . 
+                    . . . . f f f f f f . 5 4 2 5 . 
+                    . . . . . . f f f . . . 5 5 . . 
+                    `,img`
+                    . . . . . . . . . . . . . . . . 
+                    . . . . f f f f f f . . . . . . 
+                    . . . f 2 f e e e e f f . . . . 
+                    . . f 2 2 2 f e e e e f f . . . 
+                    . . f e e e e f f e e e f . . . 
+                    . f e 2 2 2 2 e e f f f f . . . 
+                    . f 2 e f f f f 2 2 2 e f . . . 
+                    . f f f e e e f f f f f f f . . 
+                    . f e e 4 4 f b e 4 4 e f f . . 
+                    . . f e d d f 1 4 d 4 e e f . . 
+                    . . . f d d d e e e e e f f f . 
+                    . . . f e 4 e d d 4 f . f d f . 
+                    . . . f 2 2 e d d e f . f d f . 
+                    . . f f 5 5 f e e f f f f f f . 
+                    . . f f f f f f f f f f 5 4 5 . 
+                    . . . f f f . . . f f . . 5 . . 
+                    `,img`
+                    . . . . f f f f f f . . . . . . 
+                    . . . f 2 f e e e e f f . . . . 
+                    . . f 2 2 2 f e e e e f f . . . 
+                    . . f e e e e f f e e e f . . . 
+                    . f e 2 2 2 2 e e f f f f . . . 
+                    . f 2 e f f f f 2 2 2 e f . . . 
+                    . f f f e e e f f f f f f f . . 
+                    . f e e 4 4 f b e 4 4 e f f . . 
+                    . . f e d d f 1 4 d 4 e e f . . 
+                    . . . f d d d d 4 e e e f f f . 
+                    . . . f e 4 4 4 e e f f d d f . 
+                    . . . f 2 2 2 e d d 4 d d d f . 
+                    . . . f 2 2 2 e d d e f f f f . 
+                    . . . f 5 5 4 f e e f 5 2 4 5 . 
+                    . . . . f f f f f f . 5 4 2 5 . 
+                    . . . . . . f f f . . . 5 5 . . 
+                    `,img`
+                    . . . . . . . . . . . . . . . . 
+                    . . . . f f f f f f . . . . . . 
+                    . . . f 2 f e e e e f f . . . . 
+                    . . f 2 2 2 f e e e e f f . . . 
+                    . . f e e e e f f e e e f . . . 
+                    . f e 2 2 2 2 e e f f f f . . . 
+                    . f 2 e f f f f 2 2 2 e f . . . 
+                    . f f f e e e f f f f f f f . . 
+                    . f e e 4 4 f b e 4 4 e f f . . 
+                    . . f e d d f 1 4 d 4 e e f . . 
+                    . . . f d d d d 4 e e e f f f . 
+                    . . . f e 4 4 4 e d d 4 d d f . 
+                    . . . f 2 2 2 2 e d d e d d f . 
+                    . . f f 5 5 4 4 f e e f f f f . 
+                    . . f f f f f f f f f f 5 2 5 . 
+                    . . . f f f . . . f f . . 5 . . 
+                    `],
+                500,
+                true
+                )
+            }
+        } else if (jump == true) {
+            Player1.vy = -150
+            jump = false
+        }
     }
 })
-sprites.onOverlap(SpriteKind.Player, SpriteKind.P_1, function (sprite, otherSprite) {
-    DialogMode = true
-    story.showPlayerChoices("A", "B")
-    pause(100)
-    DialogMode = false
-})
-info.onLifeZero(function () {
-    game.gameOver(false)
-})
-controller.player1.onButtonEvent(ControllerButton.Right, ControllerButtonEvent.Pressed, function () {
-    animation.runImageAnimation(
-    Player1,
-    [img`
-        . . . . . . f f f f f f . . . . 
-        . . . . f f e e e e f 2 f . . . 
-        . . . f f e e e e f 2 2 2 f . . 
-        . . . f e e e f f e e e e f . . 
-        . . . f f f f e e 2 2 2 2 e f . 
-        . . . f e 2 2 2 f f f f e 2 f . 
-        . . f f f f f f f e e e f f f . 
-        . . f f e 4 4 e b f 4 4 e e f . 
-        . . f e e 4 d 4 1 f d d e f . . 
-        . . . f e e e 4 d d d d f . . . 
-        . . . . f f e e 4 4 4 e f . . . 
-        . . . . . 4 d d e 2 2 2 f . . . 
-        . . . . . e d d e 2 2 2 f . . . 
-        . . . . . f e e f 4 5 5 f . . . 
-        . . . . . . f f f f f f . . . . 
-        . . . . . . . f f f . . . . . . 
-        `,img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . f f f f f f . . . . 
-        . . . . f f e e e e f 2 f . . . 
-        . . . f f e e e e f 2 2 2 f . . 
-        . . . f e e e f f e e e e f . . 
-        . . . f f f f e e 2 2 2 2 e f . 
-        . . . f e 2 2 2 f f f f e 2 f . 
-        . . f f f f f f f e e e f f f . 
-        . . f f e 4 4 e b f 4 4 e e f . 
-        . . f e e 4 d 4 1 f d d e f . . 
-        . . . f e e e e e d d d f . . . 
-        . . . . . f 4 d d e 4 e f . . . 
-        . . . . . f e d d e 2 2 f . . . 
-        . . . . f f f e e f 5 5 f f . . 
-        . . . . f f f f f f f f f f . . 
-        . . . . . f f . . . f f f . . . 
-        `,img`
-        . . . . . . f f f f f f . . . . 
-        . . . . f f e e e e f 2 f . . . 
-        . . . f f e e e e f 2 2 2 f . . 
-        . . . f e e e f f e e e e f . . 
-        . . . f f f f e e 2 2 2 2 e f . 
-        . . . f e 2 2 2 f f f f e 2 f . 
-        . . f f f f f f f e e e f f f . 
-        . . f f e 4 4 e b f 4 4 e e f . 
-        . . f e e 4 d 4 1 f d d e f . . 
-        . . . f e e e 4 d d d d f . . . 
-        . . . . f f e e 4 4 4 e f . . . 
-        . . . . . 4 d d e 2 2 2 f . . . 
-        . . . . . e d d e 2 2 2 f . . . 
-        . . . . . f e e f 4 5 5 f . . . 
-        . . . . . . f f f f f f . . . . 
-        . . . . . . . f f f . . . . . . 
-        `,img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . f f f f f f . . . . 
-        . . . . f f e e e e f 2 f . . . 
-        . . . f f e e e e f 2 2 2 f . . 
-        . . . f e e e f f e e e e f . . 
-        . . . f f f f e e 2 2 2 2 e f . 
-        . . . f e 2 2 2 f f f f e 2 f . 
-        . . f f f f f f f e e e f f f . 
-        . . f f e 4 4 e b f 4 4 e e f . 
-        . . f e e 4 d 4 1 f d d e f . . 
-        . . . f e e e 4 d d d d f . . . 
-        . . . . 4 d d e 4 4 4 e f . . . 
-        . . . . e d d e 2 2 2 2 f . . . 
-        . . . . f e e f 4 4 5 5 f f . . 
-        . . . . f f f f f f f f f f . . 
-        . . . . . f f . . . f f f . . . 
-        `],
-    200,
-    true
-    )
-    music.play(music.melodyPlayable(music.footstep), music.PlaybackMode.UntilDone)
-})
-scene.onOverlapTile(SpriteKind.Player, assets.tile`transparency16`, function (sprite, location) {
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile`, function (sprite, location) {
     game.gameOver(true)
     effects.confetti.endScreenEffect()
 })
-sprites.onOverlap(SpriteKind.Player, SpriteKind.P_2, function (sprite, otherSprite) {
-    Speed()
-    DialogMode = true
-    story.showPlayerChoices("C", "D")
-    pause(100)
-    DialogMode = false
-})
-scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.collectibleRedCrystal, function (sprite, location) {
+scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.collectibleRedCrystal, function (sprite5, location3) {
     Q_Answer_2 = sprites.create(img`
         f f f f f f f f f f f f f f f f 
         f 1 1 9 6 6 6 6 6 6 6 6 9 1 1 f 
@@ -273,21 +318,281 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.collectibleRedCrystal, fu
         1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
         1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
         `)
-    tiles.setCurrentTilemap(tilemap`level6`)
+    tiles.setCurrentTilemap(tilemap`level1`)
     tiles.placeOnRandomTile(Player1, sprites.dungeon.collectibleBlueCrystal)
     scene.cameraFollowSprite(Player1)
+    game.showLongText("LVL2", DialogLayout.Center)
+    game.showLongText("One tip...", DialogLayout.Center)
+    game.showLongText("This Power is one of the most unstable powers", DialogLayout.Center)
+    game.showLongText("Hod A to activate your power, be aware that if you release it, you might not be able to use it again ", DialogLayout.Center)
     jump = false
     DialogMode = false
-    Sprite_SpeedX = 50
 })
-function Speed () {
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (story.checkLastAnswer("D")) {
-        pause(100)
-        if (controller.B.isPressed()) {
-        	
+        controller.moveSprite(Player1, 2 * SpriteSpeedX, 0)
+        if (controller.right.isPressed() && controller.A.isPressed()) {
+            animation.runImageAnimation(
+            Player1,
+            [img`
+                ....................ffffff....
+                ...55555..........ffeeeef2f...
+                .555....5........ffeeeef222f..
+                55......55...55555eeeffeeeef..
+                ...5555..5..55...ffffee2222ef.
+                ..55..55.5555.5555e222ffffe2f.
+                .55....5..55.55.fffffffeeefff.
+                55.555.55...55..ffe44ebf44eef.
+                ..55.55.55.55...fee4d41fddef..
+                555....5.555..55.feee4ddddf...
+                5..5555.55...55...ffee444ef...
+                .555..55555555...554dde222f...
+                55......55.....55..edde222f...
+                .........5555555...feef455f...
+                ....................ffffff....
+                .....................fff......
+                `,img`
+                ..............................
+                ....................ffffff....
+                ...5555.....55....ffeeeef2f...
+                ..55..55...5555..ffeeeef222f..
+                .55....55555..555feeeffeeeef..
+                55.............5.ffffee2222ef.
+                ....555...555555.fe222ffffe2f.
+                .5555.55555.....fffffffeeefff.
+                ..............55ffe44ebf44eef.
+                55.....55...555.fee4d41fddef..
+                .55...5.55555...5feeeeedddf...
+                ..55555.......555..f4dde4ef...
+                5...5........55....fedde22f...
+                .555..55555555....fffeef55ff..
+                ...5555...........ffffffffff..
+                ...................ff...fff...
+                `,img`
+                ..............................
+                .....................ffffff...
+                555................ffeeeef2f..
+                ..55...55555......ffeeeef222f.
+                ...55555....55....feeeffeeeef.
+                .....5.......55555ffffee2222ef
+                ..5...5555555.....fe222ffffe2f
+                ..55555.....55555fffffffeeefff
+                .......55.......55fe44ebf44eef
+                .55.....555555555fee4d41fddef.
+                ..555............5feee4ddddf..
+                ....55..555....555.ffee444ef..
+                .....5555.555555....4dde222f..
+                ....................edde222f..
+                ....................feef455f..
+                .....................ffffff...
+                `,img`
+                ..............................
+                ....................ffffff....
+                5555..............ffeeeef2f...
+                ....5....5555555.ffeeeef222f..
+                ....555.55.....55feeeffeeeef..
+                555...555........ffffee2222ef.
+                ..55.......555555fe222ffffe2f.
+                ...55.....55....fffffffeeefff.
+                5...5555555...55ffe44ebf44eef.
+                .55...........5.fee4d41fddef..
+                ..5555555....55.55eee4ddddf...
+                5........55555.55.4dde444ef...
+                .55555.........5..edde2222f...
+                .....55555555555..feef4455ff..
+                ..................ffffffffff..
+                ...................ff...fff...
+                `],
+            100,
+            true
+            )
+        }
+        if (controller.left.isPressed() && controller.A.isPressed()) {
+            animation.runImageAnimation(
+            Player1,
+            [img`
+                ....ffffff....................
+                ...f2feeeeff..........55555...
+                ..f222feeeeff........5....555.
+                ..feeeeffeee55555...55......55
+                .fe2222eeffff...55..5..5555...
+                .f2effff222e5555.5555.55..55..
+                .fffeeefffffff.55.55..5....55.
+                .fee44fbe44eff..55...55.555.55
+                ..feddf14d4eef...55.55.55.55..
+                ...fdddd4eeef.55..555.5....555
+                ...fe444eeff...55...55.5555..5
+                ...f222edd455...55555555..555.
+                ...f222edde..55.....55......55
+                ...f554feef...5555555.........
+                ....ffffff....................
+                ......fff.....................
+                `,img`
+                ..............................
+                ....ffffff....................
+                ...f2feeeeff....55.....5555...
+                ..f222feeeeff..5555...55..55..
+                ..feeeeffeeef555..55555....55.
+                .fe2222eeffff.5.............55
+                .f2effff222ef.555555...555....
+                .fffeeefffffff.....55555.5555.
+                .fee44fbe44eff55..............
+                ..feddf14d4eef.555...55.....55
+                ...fdddeeeeef5...55555.5...55.
+                ...fe4edd4f..555.......55555..
+                ...f22eddef....55........5...5
+                ..ff55feefff....55555555..555.
+                ..ffffffffff...........5555...
+                ...fff...ff...................
+                `,img`
+                ..............................
+                ...ffffff.....................
+                ..f2feeeeff................555
+                .f222feeeeff......55555...55..
+                .feeeeffeeef....55....55555...
+                fe2222eeffff55555.......5.....
+                f2effff222ef.....5555555...5..
+                fffeeefffffff55555.....55555..
+                fee44fbe44ef55.......55.......
+                .feddf14d4eef555555555.....55.
+                ..fdddd4eeef5............555..
+                ..fe444eeff.555....555..55....
+                ..f222edd4....555555.5555.....
+                ..f222edde....................
+                ..f554feef....................
+                ...ffffff.....................
+                `,img`
+                ..............................
+                ....ffffff....................
+                ...f2feeeeff..............5555
+                ..f222feeeeff.5555555....5....
+                ..feeeeffeeef55.....55.555....
+                .fe2222eeffff........555...555
+                .f2effff222ef555555.......55..
+                .fffeeefffffff....55.....55...
+                .fee44fbe44eff55...5555555...5
+                ..feddf14d4eef.5...........55.
+                ...fdddd4eee55.55....5555555..
+                ...fe444edd4.55.55555........5
+                ...f2222edde..5.........55555.
+                ..ff5544feef..55555555555.....
+                ..ffffffffff..................
+                ...fff...ff...................
+                `],
+            100,
+            true
+            )
         }
     }
-}
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.P_1, function (sprite3, otherSprite) {
+    DialogMode = true
+    game.showLongText("JetPack", DialogLayout.Bottom)
+    game.showLongText("Press B twice to activate your power", DialogLayout.Bottom)
+    game.showLongText("After reading, select the correct form of the quadartic equation", DialogLayout.Bottom)
+    game.showLongText("A: Ax^2+bx+c or          B: Ax+bx^3+3*(C)        Take your time", DialogLayout.Bottom)
+    game.showLongText("Choose Fast, enemies will start chasing you", DialogLayout.Bottom)
+    story.showPlayerChoices("A", "B")
+    controller.moveSprite(Player1, 0, 0)
+    pause(100)
+    DialogMode = false
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.P_2, function (sprite4, otherSprite2) {
+    DialogMode = true
+    game.showLongText("Speed Power...", DialogLayout.Center)
+    story.showPlayerChoices("C", "D")
+    pause(100)
+    DialogMode = false
+})
+controller.A.onEvent(ControllerButtonEvent.Released, function () {
+    controller.moveSprite(Player1, SpriteSpeedX, 0)
+})
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile12`, function (sprite2, location2) {
+    if (true) {
+        info.changeLifeBy(-3)
+        sprites.destroy(Player1, effects.halo, 500)
+    }
+})
+info.onLifeZero(function () {
+    game.gameOver(false)
+})
+controller.player1.onButtonEvent(ControllerButton.Right, ControllerButtonEvent.Pressed, function () {
+    animation.runImageAnimation(
+    Player1,
+    [img`
+        . . . . . . f f f f f f . . . . 
+        . . . . f f e e e e f 2 f . . . 
+        . . . f f e e e e f 2 2 2 f . . 
+        . . . f e e e f f e e e e f . . 
+        . . . f f f f e e 2 2 2 2 e f . 
+        . . . f e 2 2 2 f f f f e 2 f . 
+        . . f f f f f f f e e e f f f . 
+        . . f f e 4 4 e b f 4 4 e e f . 
+        . . f e e 4 d 4 1 f d d e f . . 
+        . . . f e e e 4 d d d d f . . . 
+        . . . . f f e e 4 4 4 e f . . . 
+        . . . . . 4 d d e 2 2 2 f . . . 
+        . . . . . e d d e 2 2 2 f . . . 
+        . . . . . f e e f 4 5 5 f . . . 
+        . . . . . . f f f f f f . . . . 
+        . . . . . . . f f f . . . . . . 
+        `,img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . f f f f f f . . . . 
+        . . . . f f e e e e f 2 f . . . 
+        . . . f f e e e e f 2 2 2 f . . 
+        . . . f e e e f f e e e e f . . 
+        . . . f f f f e e 2 2 2 2 e f . 
+        . . . f e 2 2 2 f f f f e 2 f . 
+        . . f f f f f f f e e e f f f . 
+        . . f f e 4 4 e b f 4 4 e e f . 
+        . . f e e 4 d 4 1 f d d e f . . 
+        . . . f e e e e e d d d f . . . 
+        . . . . . f 4 d d e 4 e f . . . 
+        . . . . . f e d d e 2 2 f . . . 
+        . . . . f f f e e f 5 5 f f . . 
+        . . . . f f f f f f f f f f . . 
+        . . . . . f f . . . f f f . . . 
+        `,img`
+        . . . . . . f f f f f f . . . . 
+        . . . . f f e e e e f 2 f . . . 
+        . . . f f e e e e f 2 2 2 f . . 
+        . . . f e e e f f e e e e f . . 
+        . . . f f f f e e 2 2 2 2 e f . 
+        . . . f e 2 2 2 f f f f e 2 f . 
+        . . f f f f f f f e e e f f f . 
+        . . f f e 4 4 e b f 4 4 e e f . 
+        . . f e e 4 d 4 1 f d d e f . . 
+        . . . f e e e 4 d d d d f . . . 
+        . . . . f f e e 4 4 4 e f . . . 
+        . . . . . 4 d d e 2 2 2 f . . . 
+        . . . . . e d d e 2 2 2 f . . . 
+        . . . . . f e e f 4 5 5 f . . . 
+        . . . . . . f f f f f f . . . . 
+        . . . . . . . f f f . . . . . . 
+        `,img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . f f f f f f . . . . 
+        . . . . f f e e e e f 2 f . . . 
+        . . . f f e e e e f 2 2 2 f . . 
+        . . . f e e e f f e e e e f . . 
+        . . . f f f f e e 2 2 2 2 e f . 
+        . . . f e 2 2 2 f f f f e 2 f . 
+        . . f f f f f f f e e e f f f . 
+        . . f f e 4 4 e b f 4 4 e e f . 
+        . . f e e 4 d 4 1 f d d e f . . 
+        . . . f e e e 4 d d d d f . . . 
+        . . . . 4 d d e 4 4 4 e f . . . 
+        . . . . e d d e 2 2 2 2 f . . . 
+        . . . . f e e f 4 4 5 5 f f . . 
+        . . . . f f f f f f f f f f . . 
+        . . . . . f f . . . f f f . . . 
+        `],
+    200,
+    true
+    )
+    music.play(music.melodyPlayable(music.footstep), music.PlaybackMode.UntilDone)
+})
 controller.player1.onButtonEvent(ControllerButton.Left, ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
     Player1,
@@ -366,10 +671,10 @@ controller.player1.onButtonEvent(ControllerButton.Left, ControllerButtonEvent.Pr
     music.play(music.melodyPlayable(music.footstep), music.PlaybackMode.UntilDone)
 })
 let Moving = false
-let Sprite_SpeedX = 0
 let Q_Answer_2: Sprite = null
 let jump = false
 let DialogMode = false
+let SpriteSpeedX = 0
 let Q_and_Answer: Sprite = null
 let Player1: Sprite = null
 Player1 = sprites.create(img`
@@ -390,6 +695,26 @@ Player1 = sprites.create(img`
     . . . . . f f f f f f . . . . . 
     . . . . . f f . . f f . . . . . 
     `, SpriteKind.Player)
+let EnemYlv1 = sprites.create(img`
+    . . . . 2 2 2 2 2 e . . . . . . 
+    . . . 2 2 2 2 d 2 2 e . . . . . 
+    . . e 2 2 2 2 2 2 2 e . . . . . 
+    . . e 2 2 2 2 2 2 2 e . . . . . 
+    . . e 2 2 2 2 2 e f f c c . . . 
+    . . e e 2 2 e f f f f b c . . . 
+    . e e e f e 2 b f f f d c . . . 
+    e e 2 2 d f 2 1 1 1 1 b c . . . 
+    e e 2 2 d f e e c c c . . . . . 
+    b 1 1 d e 2 2 e e c . . . . . . 
+    . f f e 2 2 2 2 e . . . . . . . 
+    . . f f d d 2 2 f f d d . . . . 
+    . . f f d d e e f f d d . . . . 
+    . . . f f f f . . . . . . . . . 
+    . . e e e f f f . . . . . . . . 
+    . . e e e e f f f . . . . . . . 
+    `, SpriteKind.Enemy)
+EnemYlv1.follow(Player1, 50)
+controller.moveSprite(Player1, 80, 0)
 info.player1.setLife(3)
 scene.setBackgroundImage(img`
     7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
@@ -535,30 +860,20 @@ Q_and_Answer = sprites.create(img`
     `, SpriteKind.P_1)
 tiles.placeOnRandomTile(Q_and_Answer, sprites.castle.tileDarkGrass3)
 scene.cameraFollowSprite(Player1)
+SpriteSpeedX = 80
 let Pixeltometers = 30
 let Graity = Pixeltometers * 9.8
 Player1.ay = Graity
 DialogMode = false
 jump = false
+game.showLongText("Before starting you need to know two things...", DialogLayout.Bottom)
+game.showLongText("First, Right Answer gives you the power up,", DialogLayout.Bottom)
+game.showLongText("Enemies will try to catch you, be aware,", DialogLayout.Bottom)
+game.showLongText("Good luck", DialogLayout.Bottom)
+EnemYlv1.setPosition(140, 0)
 game.onUpdate(function () {
     Moving = controller.player1.isPressed(ControllerButton.Right) || controller.player1.isPressed(ControllerButton.Left)
     if (!(Moving)) {
         animation.stopAnimation(animation.AnimationTypes.All, Player1)
-    }
-})
-forever(function () {
-    Doble_Jump()
-    if (DialogMode == false) {
-        controller.moveSprite(Player1, 100, 0)
-    } else if (DialogMode == true) {
-        controller.moveSprite(Player1, 0, 0)
-    }
-})
-forever(function () {
-    Speed()
-    if (DialogMode == false) {
-        controller.moveSprite(Player1, 100, 0)
-    } else if (DialogMode == true) {
-        controller.moveSprite(Player1, 0, 0)
     }
 })
