@@ -2,12 +2,14 @@ namespace SpriteKind {
     export const P_1 = SpriteKind.create()
     export const P_2 = SpriteKind.create()
 }
+// NORMAL JUMPING
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Player1.isHittingTile(CollisionDirection.Bottom)) {
         Player1.vy += -140
     }
     music.play(music.melodyPlayable(music.pewPew), music.PlaybackMode.UntilDone)
 })
+// JETPACK POWER UP
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     if (story.checkLastAnswer("A")) {
         pause(100)
@@ -171,6 +173,8 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
         }
     }
 })
+// CHANGING THE SCENE + SETTING POSITIONS AND TEXT
+// 
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.collectibleRedCrystal, function (sprite5, location3) {
     Q_Answer_2 = sprites.create(img`
         f f f f f f f f f f f f f f f f 
@@ -191,7 +195,8 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.collectibleRedCrystal, fu
         f f f f f f f f f f f f f f f f 
         `, SpriteKind.P_2)
     Q_Answer_2.setPosition(122, 120)
-    sprites.destroy(Q_and_Answer, effects.spray, 1000)
+    Q_and_Answer.setPosition(122, 120)
+    sprites.destroy(Q_and_Answer, effects.none, 1000)
     scene.setBackgroundImage(img`
         8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
         8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
@@ -317,13 +322,17 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.collectibleRedCrystal, fu
     tiles.setCurrentTilemap(tilemap`level10`)
     tiles.placeOnRandomTile(Player1, sprites.dungeon.collectibleBlueCrystal)
     scene.cameraFollowSprite(Player1)
-    game.showLongText("LVL2", DialogLayout.Center)
-    game.showLongText("One tip...", DialogLayout.Center)
-    game.showLongText("This Power is one of the most unstable powers", DialogLayout.Center)
-    game.showLongText("Hod A to activate your power, be aware that if you release it, you might not be able to use it again ", DialogLayout.Center)
+    Titlle_top = textsprite.create("Level 2")
+    Titlle_top.setScale(2, ScaleAnchor.Middle)
+    Titlle_top.setOutline(1, 15)
+    Titlle_top.setPosition(52, 125)
+    game.showLongText("One tip...", DialogLayout.Bottom)
+    game.showLongText("This Power is one of the most unstable powers", DialogLayout.Bottom)
+    game.showLongText("Hod A to activate your power, be aware that if you release it, you might not be able to use it again ", DialogLayout.Bottom)
     jump = false
     DialogMode = false
 })
+// SPEED POWER UP
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (story.checkLastAnswer("D")) {
         controller.moveSprite(Player1, 2 * SpriteSpeedX, 0)
@@ -481,6 +490,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         }
     }
 })
+// QUESTIONS AND ANSWER JETPACK
 sprites.onOverlap(SpriteKind.Player, SpriteKind.P_1, function (sprite3, otherSprite) {
     DialogMode = true
     game.showLongText("JetPack", DialogLayout.Bottom)
@@ -493,20 +503,24 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.P_1, function (sprite3, otherSpr
     pause(100)
     DialogMode = false
 })
+// QUESTION AND ANS FOR SPEED
 sprites.onOverlap(SpriteKind.Player, SpriteKind.P_2, function (sprite4, otherSprite2) {
     DialogMode = true
-    game.showLongText("Speed Power...", DialogLayout.Center)
+    game.showLongText("Speed Power...", DialogLayout.Bottom)
     story.showPlayerChoices("C", "D")
     pause(100)
     DialogMode = false
 })
+// SPEED BACK TO NORMAL
 controller.A.onEvent(ControllerButtonEvent.Released, function () {
     controller.moveSprite(Player1, SpriteSpeedX, 0)
 })
+// IF PLAYER 1 OVERLAPS AN SPECIFIC OBJECT THEN PLAYER 1 WILL WIN
 scene.onOverlapTile(SpriteKind.Player, assets.tile`tile2`, function (sprite, location) {
     game.gameOver(true)
     effects.confetti.endScreenEffect()
 })
+// THIS CONTROLS THE INTRO
 function Cutscene () {
     Player1.setPosition(52, 83)
     scene.setBackgroundImage(img`
@@ -643,90 +657,12 @@ function Cutscene () {
         pause(1)
     }
     effects.confetti.endScreenEffect()
-    animation.runImageAnimation(
-    Player1,
-    [img`
-        . . . . . . f f f f f f . . . . 
-        . . . . f f e e e e f 2 f . . . 
-        . . . f f e e e e f 2 2 2 f . . 
-        . . . f e e e f f e e e e f . . 
-        . . . f f f f e e 2 2 2 2 e f . 
-        . . . f e 2 2 2 f f f f e 2 f . 
-        . . f f f f f f f e e e f f f . 
-        . . f f e 4 4 e b f 4 4 e e f . 
-        . . f e e 4 d 4 1 f d d e f . . 
-        . . . f e e e 4 d d d d f . . . 
-        . . . . f f e e 4 4 4 e f . . . 
-        . . . . . 4 d d e 2 2 2 f . . . 
-        . . . . . e d d e 2 2 2 f . . . 
-        . . . . . f e e f 4 5 5 f . . . 
-        . . . . . . f f f f f f . . . . 
-        . . . . . . . f f f . . . . . . 
-        `,img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . f f f f f f . . . . 
-        . . . . f f e e e e f 2 f . . . 
-        . . . f f e e e e f 2 2 2 f . . 
-        . . . f e e e f f e e e e f . . 
-        . . . f f f f e e 2 2 2 2 e f . 
-        . . . f e 2 2 2 f f f f e 2 f . 
-        . . f f f f f f f e e e f f f . 
-        . . f f e 4 4 e b f 4 4 e e f . 
-        . . f e e 4 d 4 1 f d d e f . . 
-        . . . f e e e e e d d d f . . . 
-        . . . . . f 4 d d e 4 e f . . . 
-        . . . . . f e d d e 2 2 f . . . 
-        . . . . f f f e e f 5 5 f f . . 
-        . . . . f f f f f f f f f f . . 
-        . . . . . f f . . . f f f . . . 
-        `,img`
-        . . . . . . f f f f f f . . . . 
-        . . . . f f e e e e f 2 f . . . 
-        . . . f f e e e e f 2 2 2 f . . 
-        . . . f e e e f f e e e e f . . 
-        . . . f f f f e e 2 2 2 2 e f . 
-        . . . f e 2 2 2 f f f f e 2 f . 
-        . . f f f f f f f e e e f f f . 
-        . . f f e 4 4 e b f 4 4 e e f . 
-        . . f e e 4 d 4 1 f d d e f . . 
-        . . . f e e e 4 d d d d f . . . 
-        . . . . f f e e 4 4 4 e f . . . 
-        . . . . . 4 d d e 2 2 2 f . . . 
-        . . . . . e d d e 2 2 2 f . . . 
-        . . . . . f e e f 4 5 5 f . . . 
-        . . . . . . f f f f f f . . . . 
-        . . . . . . . f f f . . . . . . 
-        `,img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . f f f f f f . . . . 
-        . . . . f f e e e e f 2 f . . . 
-        . . . f f e e e e f 2 2 2 f . . 
-        . . . f e e e f f e e e e f . . 
-        . . . f f f f e e 2 2 2 2 e f . 
-        . . . f e 2 2 2 f f f f e 2 f . 
-        . . f f f f f f f e e e f f f . 
-        . . f f e 4 4 e b f 4 4 e e f . 
-        . . f e e 4 d 4 1 f d d e f . . 
-        . . . f e e e 4 d d d d f . . . 
-        . . . . 4 d d e 4 4 4 e f . . . 
-        . . . . e d d e 2 2 2 2 f . . . 
-        . . . . f e e f 4 4 5 5 f f . . 
-        . . . . f f f f f f f f f f . . 
-        . . . . . f f . . . f f f . . . 
-        `],
-    200,
-    true
-    )
-    animation.runMovementAnimation(
-    Player1,
-    animation.animationPresets(animation.easeRight),
-    2000,
-    false
-    )
 }
+// TO DIE WHEN LIFE IS 0
 info.onLifeZero(function () {
     game.gameOver(false)
 })
+// WALKING LEFT ANIMATION
 controller.player1.onButtonEvent(ControllerButton.Right, ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
     Player1,
@@ -804,12 +740,14 @@ controller.player1.onButtonEvent(ControllerButton.Right, ControllerButtonEvent.P
     )
     music.play(music.melodyPlayable(music.footstep), music.PlaybackMode.UntilDone)
 })
+// TO DIE WHEN IT FALLS TO INFINITY 
 scene.onOverlapTile(SpriteKind.Player, assets.tile`tile3`, function (sprite2, location2) {
     if (true) {
         info.changeLifeBy(-3)
         sprites.destroy(Player1, effects.halo, 500)
     }
 })
+// WALKING RIGHT ANIMATION
 controller.player1.onButtonEvent(ControllerButton.Left, ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
     Player1,
@@ -1090,6 +1028,7 @@ game.showLongText("First, Right Answer gives you the power up,", DialogLayout.Bo
 game.showLongText("Enemies will try to catch you, be aware,", DialogLayout.Bottom)
 game.showLongText("Good luck", DialogLayout.Bottom)
 EnemYlv1.setPosition(140, 0)
+// STOPPING ALL ANIMATIONS
 game.onUpdate(function () {
     Moving = controller.player1.isPressed(ControllerButton.Right) || controller.player1.isPressed(ControllerButton.Left)
     if (!(Moving)) {
