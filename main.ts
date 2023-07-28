@@ -2,6 +2,9 @@ namespace SpriteKind {
     export const P_1 = SpriteKind.create()
     export const P_2 = SpriteKind.create()
 }
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile0`, function (sprite, location) {
+	
+})
 // NORMAL JUMPING
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Player1.isHittingTile(CollisionDirection.Bottom)) {
@@ -329,6 +332,8 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.collectibleRedCrystal, fu
     game.showLongText("One tip...", DialogLayout.Bottom)
     game.showLongText("This Power is one of the most unstable powers", DialogLayout.Bottom)
     game.showLongText("Hod A to activate your power, be aware that if you release it, you might not be able to use it again ", DialogLayout.Bottom)
+    game.showLongText("Because the power is unstable...", DialogLayout.Bottom)
+    game.showLongText("Take this special sword. Press B to attack", DialogLayout.Bottom)
     jump = false
     DialogMode = false
 })
